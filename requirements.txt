@@ -1,0 +1,8 @@
+flask-paginate
+Flask-APScheduler
+flask-user
+flask-mail
+Flask-SQLAlchemy
+Flask-Session
+PyMongo
+TA-Lib

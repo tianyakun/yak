@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="dashboard">
+    <form action="{{ url_for('search') }}" method="post">
+            {{ form.hidden_tag() }}
+            {{ form.stocklookup(size=20, autofocus="autofocus") }}
+            <input type="submit" value="Search">
+        </form>
+    <br>
+
+    {% if search_stock %}
+        <table class="stocklist">
+			<tr class="tableheader">
+				<td>代码</td>
+				<td>名称</td>
+				<td>现价</td>
+				<td>涨跌幅</td>
+				<td>开盘价</td>
+				<td>最高价</td>
+				<td>最低价</td>
+				<td>昨日收盘价</td>
+				<td>成交量</td>
+				<td>换手率</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td><a href="{{ url_for('detail', code = search_stock.code) }}">{{ search_stock.code }}</a></td>
+				<td>{{ search_stock.name }}</td>
+				<td>{{ search_stock.trade }}</td>
+				<td>{{ search_stock.changepercent }}</td>
+				<td>{{ search_stock.open }}</td>
+				<td>{{ search_stock.high }}</td>
+				<td>{{ search_stock.low }}</td>
+				<td>{{ search_stock.settlement }}</td>
+				<td>{{ search_stock.volume }}</td>
+				<td>{{ search_stock.turnoverratio }}</td>
+                <td><a href="{{ url_for('users.add_p', code = search_stock.code) }}">加自选</a></td>
+			</tr>
+		</table>
+    {% endif %}
+
+    {% if stocks_portfolio %}
+    <div class="stocklist">
+        <h5>自选股</h5>
+		<table class="stocklist">
+			<tr class="tableheader">
+				<td>代码</td>
+				<td>名称</td>
+				<td>现价</td>
+				<td>涨跌幅</td>
+				<td>开盘价</td>
+				<td>最高价</td>
+				<td>最低价</td>
+				<td>昨日收盘价</td>
+				<td>成交量</td>
+				<td>换手率</td>
+				<td></td>
+			</tr>
+		{% for stock in stocks_portfolio %}
+			<tr>
+				<td><a href="{{ url_for('detail', code = stock.code) }}">{{ stock.code }}</a></td>
+				<td>{{ stock.name }}</td>
+				<td>{{ stock.trade }}</td>
+				<td>{{ stock.changepercent }}</td>
+				<td>{{ stock.open }}</td>
+				<td>{{ stock.high }}</td>
+				<td>{{ stock.low }}</td>
+				<td>{{ stock.settlement }}</td>
+				<td>{{ stock.volume }}</td>
+				<td>{{ stock.turnoverratio }}</td>
+                <td>
+                    <a href="{{ url_for('users.top_p', code = stock.code) }}">置顶</a>
+                    <a href="{{ url_for('users.delete_p', code = stock.code) }}">删除</a>
+                </td>
+			</tr>
+		{% endfor %}
+		</table>
+	</div>
+    {% endif %}
+
+
+    {% if stocks %}
+	<div class="stocklist">
+        <br>
+        <h5>排行榜</h5>
+		<table class="stocklist">
+			<tr class="tableheader">
+				<td>代码</td>
+				<td>名称</td>
+				<td>现价</td>
+				<td>涨跌幅</td>
+				<td>开盘价</td>
+				<td>最高价</td>
+				<td>最低价</td>
+				<td>昨日收盘价</td>
+				<td>成交量</td>
+				<td>换手率</td>
+				<td></td>
+			</tr>
+		{% for stock in stocks %}
+			<tr>
+				<td><a href="{{ url_for('detail', code = stock.code) }}">{{ stock.code }}</a></td>
+				<td>{{ stock.name }}</td>
+				<td>{{ stock.trade }}</td>
+				<td>{{ stock.changepercent }}</td>
+				<td>{{ stock.open }}</td>
+				<td>{{ stock.high }}</td>
+				<td>{{ stock.low }}</td>
+				<td>{{ stock.settlement }}</td>
+				<td>{{ stock.volume }}</td>
+				<td>{{ stock.turnoverratio }}</td>
+				<td><a href="{{ url_for('users.add_p', code = stock.code) }}">加自选</a></td>
+			</tr>
+		{% endfor %}
+		</table>
+        {% if pagination %}
+        {{ pagination.links }}
+        {% endif %}
+	</div>
+    {% endif %}
+
+</div>
+
+
+{% endblock %}

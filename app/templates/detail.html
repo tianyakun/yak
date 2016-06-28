@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="dashboard">
+    {% if stockdetail %}
+    	<div>
+    		<div id="summary">
+                <span id="name">{{ stockdetail.name }} ({{ stockdetail.code }})</span>
+                &nbsp&nbsp
+                <span id="price" >{{ stockdetail.price }}</span>
+                {% if stock.changepercent < 0 %}
+			        <span class="loss-summary">{{ stockdetail.change}} ({{ stock.changepercent }}%)</span><br>
+			    {% endif %}
+			    {% if stock.changepercent >= 0 %}
+			        <span id="change">+{{ stockdetail.change}} (+{{ stock.changepercent }}%)</span><br>
+			    {% endif %}
+    		</div>
+    		<div id="summary">
+                <table>
+                    <tr>
+                        <td>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <img style="-webkit-user-select: none; display: block; margin: auto; cursor: zoom-out;" src="http://image.sinajs.cn/newchart/min/n/{{ mkcode }}.gif" width="545" height="300">
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>
+                            <table class="stocklist">
+                                <tr>
+				                    <td class="tableheader">卖5</td><td class="value">{{ stockdetail.a5_p }}</td><td class="value">{{ stockdetail.a5_v }}</td>
+				                </tr>
+                                <tr>
+				                    <td class="tableheader">卖4</td><td class="value">{{ stockdetail.a4_p }}</td><td class="value">{{ stockdetail.a4_v }}</td>
+				                </tr>
+                                <tr>
+				                    <td class="tableheader">卖3</td><td class="value">{{ stockdetail.a3_p }}</td><td class="value">{{ stockdetail.a3_v }}</td>
+				                </tr>
+                                <tr>
+				                    <td class="tableheader">卖2</td><td class="value">{{ stockdetail.a2_p }}</td><td class="value">{{ stockdetail.a2_v }}</td>
+				                </tr>
+                                <tr>
+				                    <td class="tableheader">卖1</td><td class="value">{{ stockdetail.a1_p }}</td><td class="value">{{ stockdetail.a1_v }}</td>
+				                </tr>
+                                <tr>
+				                    <td class="tableheader">买1</td><td class="value">{{ stockdetail.b1_p }}</td><td class="value">{{ stockdetail.b1_v }}</td>
+				                </tr>
+                                <tr>
+				                    <td class="tableheader">买2</td><td class="value">{{ stockdetail.b2_p }}</td><td class="value">{{ stockdetail.b2_v }}</td>
+				                </tr>
+                                <tr>
+				                    <td class="tableheader">买3</td><td class="value">{{ stockdetail.b3_p }}</td><td class="value">{{ stockdetail.b3_v }}</td>
+				                </tr>
+                                <tr>
+				                    <td class="tableheader">买4</td><td class="value">{{ stockdetail.b4_p }}</td><td class="value">{{ stockdetail.b4_v }}</td>
+				                </tr>
+                                <tr>
+				                    <td class="tableheader">买5</td><td class="value">{{ stockdetail.b5_p }}</td><td class="value">{{ stockdetail.b5_v }}</td>
+				                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table class="stocklist">
+			                    <tr class="tableheader">
+			                    	<td>时间</td>
+			                    	<td>价格</td>
+			                    	<td>价格变动</td>
+			                    	<td>成交手</td>
+			                    </tr>
+                        {% if search_stock %}
+		                    {% for record in tradingrecords %}
+		                    	<tr>
+		                    		<td>{{ record.time }}</td>
+		                    		<td>{{ record.price }}</td>
+		                    		<td>{{ record.change }}</td>
+		                    		<td>{{ record.volume }}</td>
+		                    	</tr>
+		                    {% endfor %}
+                        {% endif %}
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table>
+                                <tr
+                                    <td>
+                                        <img style="-webkit-user-select: none; display: block; margin: auto; cursor: zoom-out;" src="http://image.sinajs.cn/newchart/daily/n/{{ mkcode }}.gif" width="545" height="300">
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table>
+                                <tr
+                                    <td>
+                                        <img style="-webkit-user-select: none; display: block; margin: auto; cursor: zoom-out;" src="http://image.sinajs.cn/newchart/weekly/n/{{ mkcode }}.gif" width="545" height="300">
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table>
+                                <tr
+                                    <td>
+                                        <img style="-webkit-user-select: none; display: block; margin: auto; cursor: zoom-out;" src="http://image.sinajs.cn/newchart/monthly/n/{{ mkcode }}.gif" width="545" height="300">
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    {% if stockbasic %}
+                    <tr>
+                        <td>
+                            <table class="stocklist">
+                                <tr><td class="tableheader">所属行业</td><td class="value">{{ stockbasic.industry }}</td></tr>
+                                <tr><td class="tableheader">地区</td><td class="value">{{ stockbasic.area }}</td></tr>
+                                <tr><td class="tableheader">市盈率</td><td class="value">{{ stockbasic.pe }}</td></tr>
+                                <tr><td class="tableheader">流通股本</td><td class="value">{{ stockbasic.outstanding }}</td></tr>
+                                <tr><td class="tableheader">总股本(万)</td><td class="value">{{ stockbasic.totals }}</td></tr>
+                                <tr><td class="tableheader">总资产(万)</td><td class="value">{{ stockbasic.totalAssets }}</td></tr>
+                                <tr><td class="tableheader">流动资产</td><td class="value">{{ stockbasic.liquidAssets }}</td></tr>
+                                <tr><td class="tableheader">固定资产</td><td class="value">{{ stockbasic.fixedAssets }}</td></tr>
+                                <tr><td class="tableheader">公积金</td><td class="value">{{ stockbasic.reserved }}</td></tr>
+                                <tr><td class="tableheader">每股公积金</td><td class="value">{{ stockbasic.reservedPerShare }}</td></tr>
+                                <tr><td class="tableheader">每股收益</td><td class="value">{{ stockbasic.esp }}</td></tr>
+                                <tr><td class="tableheader">每股净资</td><td class="value">{{ stockbasic.bvps }}</td></tr>
+                                <tr><td class="tableheader">市净率</td><td class="value">{{ stockbasic.pb }}</td></tr>
+                                <tr><td class="tableheader">上市日期</td><td class="value">{{ stockbasic.timeToMarket }}</td></tr>
+                            </table>
+                        </td>
+                    </tr>
+                    {% endif %}
+                </table>
+    		</div>
+        </div>
+        {% endif %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="dashboard">
+	<div class="stocklist">
+        <br>
+        <h2>Profile:</h2>
+		<table class="stocklist">
+            <tr>
+                <td>Email:</td>
+                <td>{{ current_user.email }}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Name:</td>
+                <td>{{ current_user.username }}</td>
+                <td><a href="/user/change-username">Change name</a></td>
+            </tr>
+            <tr>
+                <td>Password:</td>
+                <td></td>
+                <td><a href="/user/change-password">Change password</a></td>
+            </tr>
+		</table>
+	</div>
+</div>
+{% endblock %}
